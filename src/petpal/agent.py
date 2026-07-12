@@ -92,15 +92,10 @@ class PetPalAgent:
             self.task = self.task_queue.get()
 
     def fetch_camera_images_base64(self) -> list[str]:
-        for attempt in range(3):
-            try:
-                image_bytes = self.main_camera.capture_image(camera_fov=self.camera_fov)
-                return [base64.b64encode(image_bytes).decode("utf-8")]
-            except Exception as exc:
-                print(f"Camera capture failed ({attempt + 1}/3): {exc}")
-                time.sleep(0.3 * (attempt + 1))
-                self.main_camera.reopen()
-        raise RuntimeError("Failed to fetch camera image after retries.")
+        from .vision import _capture_image_with_retry
+
+        image_bytes = _capture_image_with_retry(self.main_camera, camera_fov=self.camera_fov)
+        return [base64.b64encode(image_bytes).decode("utf-8")]
 
     def _trim_history(self) -> None:
         if not self.history_len:

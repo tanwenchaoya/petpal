@@ -24,13 +24,13 @@ export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
 Run the agent:
 
 ```bash
-python examples/petpal_agent.py --camera 2
+python examples/petpal_agent.py --camera 0
 ```
 
 Voice mode:
 
 ```bash
-python examples/petpal_agent.py --voice --camera 2 --model qwen3.5-plus-2026-02-15
+python examples/petpal_agent.py --voice --camera 0 --model qwen3.5-plus-2026-02-15
 ```
 
 Simulation mode only checks the LLM connection and does not connect robot hardware:
@@ -47,11 +47,13 @@ src/petpal/
   config.py      # LLM, voice, robot, and runtime configuration
   runtime.py     # Camera, servo controller, tools, and agent construction
   tools.py       # Tools exposed to the LLM
+  vision.py      # YOLO-based cat detection
   voice.py       # Local ASR listener for voice commands
 examples/
   petpal_agent.py
 docs/
   maintenance.md
+  camera_mapping.md
   project_overview.md
 ```
 
@@ -59,9 +61,12 @@ docs/
 
 PetPal-specific behavior should live under `src/petpal/`. Avoid editing installed files under `site-packages`.
 
-The next core tools to add are:
+Implemented core tools:
 
 - `find_cat`
+
+The next core tools to add are:
+
 - `analyze_cat_state`
 - `play_with_cat`
 - `generate_daily_report`

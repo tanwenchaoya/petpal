@@ -23,7 +23,7 @@ def build_petpal_agent(config: PetPalConfig) -> PetPalAgent:
         right_arm_wheel_usb=config.robot.right_arm_port,
         left_arm_head_usb=config.robot.left_arm_port,
     )
-    tools = build_basic_petpal_tools(servo_controler)
+    tools = build_basic_petpal_tools(servo_controler, main_camera)
     agent = PetPalAgent(
         model=config.llm.langchain_model_name,
         tools=tools,

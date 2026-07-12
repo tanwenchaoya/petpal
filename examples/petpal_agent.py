@@ -17,7 +17,7 @@ from petpal import (
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="PetPal agent")
-    parser.add_argument("--camera", type=int, default=2)
+    parser.add_argument("--camera", type=int, default=0)
     parser.add_argument("--right-arm", type=str, default="/dev/cu.usbmodem5AB01579071")
     parser.add_argument("--left-arm", type=str, default="/dev/cu.usbmodem5A7C1223751")
     parser.add_argument("--task", type=str, default="慢慢往前走0.1米")

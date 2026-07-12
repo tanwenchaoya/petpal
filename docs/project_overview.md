@@ -103,13 +103,13 @@ qwen3-asr-flash
 当前入口：
 
 ```bash
-python examples/petpal_agent.py --camera 2
+python examples/petpal_agent.py --camera 0
 ```
 
 语音模式：
 
 ```bash
-python examples/petpal_agent.py --voice --camera 2 --model qwen3.5-plus-2026-02-15
+python examples/petpal_agent.py --voice --camera 0 --model qwen3.5-plus-2026-02-15
 ```
 
 模拟模式：
@@ -164,7 +164,9 @@ PetPal LLM Agent 理解任务
 
 目标：让机器人能在摄像头画面中识别猫，并返回检测结果。
 
-计划新增：
+当前状态：基础版已完成。
+
+已新增：
 
 ```text
 src/petpal/vision.py
@@ -182,6 +184,12 @@ src/petpal/vision.py
 
 ```text
 find_cat
+```
+
+当前 `find_cat` 会从头部摄像头抓取一帧图像，使用 YOLO 检测 `cat`，返回检测框、置信度、中心点、面积比例，并将原图和带框结果图保存到：
+
+```text
+outputs/captures/
 ```
 
 ### 阶段 2：视觉伺服靠近猫
