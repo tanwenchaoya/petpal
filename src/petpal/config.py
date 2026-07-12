@@ -51,4 +51,5 @@ class PetPalConfig:
     task: str = "慢慢往前走0.1米"
     simulate: bool = False
     tts: bool = False
+    reset_on_start: bool = True
     history_len: int | None = 8

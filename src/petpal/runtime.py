@@ -33,6 +33,7 @@ def build_petpal_agent(config: PetPalConfig) -> PetPalAgent:
         thinking_level=config.llm.thinking_level,
         history_len=config.history_len,
         tts=config.tts,
+        reset_on_start=config.reset_on_start,
     )
     agent.task = config.task
     return agent

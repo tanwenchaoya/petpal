@@ -37,6 +37,7 @@ class PetPalAgent:
         camera_fov: int = 90,
         history_len: int | None = 8,
         tts: bool = False,
+        reset_on_start: bool = True,
     ) -> None:
         self.task: str | None = None
         self.tools = tools
@@ -73,9 +74,18 @@ class PetPalAgent:
         self.system_message = SystemMessage(content=prompt)
         self.message_history = [self.system_message]
 
-        if self.servo_controler and getattr(self.servo_controler, "left_arm_head_usb", None):
+        if reset_on_start and self.servo_controler and getattr(self.servo_controler, "left_arm_head_usb", None):
             self.servo_controler.reset_head_position()
             self.servo_controler.set_saved_position("default", "both")
+
+    def close(self) -> None:
+        if self.sound_receiver:
+            self.sound_receiver.stop()
+        if self.servo_controler:
+            print("Disconnecting servo controller...")
+            self.servo_controler.disconnect()
+        if self.main_camera and hasattr(self.main_camera, "release"):
+            self.main_camera.release()
 
     def check_for_new_task(self) -> None:
         if self.task_queue is not None and not self.task_queue.empty():
@@ -159,8 +169,4 @@ class PetPalAgent:
         except KeyboardInterrupt:
             print("Interrupted by user, shutting down.")
         finally:
-            if self.sound_receiver:
-                self.sound_receiver.stop()
-            if self.servo_controler:
-                print("Disconnecting servo controller...")
-                self.servo_controler.disconnect()
+            self.close()
