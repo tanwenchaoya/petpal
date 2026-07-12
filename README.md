@@ -52,6 +52,7 @@ examples/
   petpal_agent.py
 docs/
   maintenance.md
+  project_overview.md
 ```
 
 ## Development Rule
