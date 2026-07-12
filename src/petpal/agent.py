@@ -96,7 +96,7 @@ class PetPalAgent:
             try:
                 image_bytes = self.main_camera.capture_image(camera_fov=self.camera_fov)
                 return [base64.b64encode(image_bytes).decode("utf-8")]
-            except RuntimeError as exc:
+            except Exception as exc:
                 print(f"Camera capture failed ({attempt + 1}/3): {exc}")
                 time.sleep(0.3 * (attempt + 1))
                 self.main_camera.reopen()
