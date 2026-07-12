@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=71"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "petpal"
+version = "0.1.0"
+description = "PetPal embodied pet-care robot agent built on RoboCrew and XLeRobot."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain",
+    "langchain-core",
+    "numpy>=2.0.0",
+    "openai",
+    "pyaudio",
+    "python-dotenv",
+    "robocrew",
+]
+
+[project.optional-dependencies]
+vision = [
+    "opencv-python",
+    "ultralytics",
+]
+dev = [
+    "ruff",
+]
+
+[project.scripts]
+petpal-agent = "petpal.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
