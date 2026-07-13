@@ -104,6 +104,20 @@ Run the recorded playback:
 PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run
 ```
 
+The default playback baseline uses smooth interpolation:
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run --interpolation-steps 28 --step-seconds 0.03 --dwell-seconds 0.1
+```
+
+Current baseline:
+
+```text
+interpolation_steps=28
+step_seconds=0.03
+dwell_seconds=0.1
+```
+
 ## Approach Test
 
 Dry-run visual approach with the head camera:

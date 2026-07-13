@@ -18,7 +18,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--right-arm", type=str, default=PetPalRobotConfig.right_arm_port)
     parser.add_argument("--left-arm", type=str, default=PetPalRobotConfig.left_arm_port)
     parser.add_argument("--repeat", type=int, default=1)
-    parser.add_argument("--dwell-seconds", type=float, default=0.7)
+    parser.add_argument("--dwell-seconds", type=float, default=0.1)
+    parser.add_argument("--interpolation-steps", type=int, default=28)
+    parser.add_argument("--step-seconds", type=float, default=0.03)
     parser.add_argument("--run", action="store_true", help="Actually move the robot when playing")
     return parser.parse_args()
 
@@ -49,6 +51,8 @@ def main() -> None:
             arm_side=args.arm_side,
             repeat=args.repeat,
             dwell_seconds=args.dwell_seconds,
+            interpolation_steps=args.interpolation_steps,
+            step_seconds=args.step_seconds,
             dry_run=True,
         )
         print(detection_result_to_json(result))
@@ -83,6 +87,8 @@ def main() -> None:
             arm_side=args.arm_side,
             repeat=args.repeat,
             dwell_seconds=args.dwell_seconds,
+            interpolation_steps=args.interpolation_steps,
+            step_seconds=args.step_seconds,
             dry_run=not args.run,
         )
         print(detection_result_to_json(result))

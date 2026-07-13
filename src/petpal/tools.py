@@ -170,13 +170,15 @@ def create_play_with_cat(servo_controler: Any):
         pose_names: list[str] | None = None,
         arm_side: str = "right",
         repeat: int = 1,
-        dwell_seconds: float = 0.7,
+        dwell_seconds: float = 0.1,
+        interpolation_steps: int = 28,
+        step_seconds: float = 0.03,
         dry_run: bool = True,
     ) -> str:
         """Replay a recorded pose sequence for laser-pointer cat play.
 
         Keep dry_run=true unless the owner explicitly asks to run the movement and the area is clear.
-        The default sequence expects petpal_tease_left, petpal_tease_center, and petpal_tease_right.
+        Use interpolation_steps and step_seconds to make playback smoother.
         """
 
         result = play_pose_sequence(
@@ -185,6 +187,8 @@ def create_play_with_cat(servo_controler: Any):
             arm_side=arm_side,  # type: ignore[arg-type]
             repeat=repeat,
             dwell_seconds=dwell_seconds,
+            interpolation_steps=interpolation_steps,
+            step_seconds=step_seconds,
             dry_run=dry_run,
         )
         return detection_result_to_json(result)

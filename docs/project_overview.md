@@ -300,6 +300,8 @@ play_with_cat
 
 - 先用 `record_petpal_pose` 录制几个右臂姿态，例如 `petpal_tease_left`、`petpal_tease_center`、`petpal_tease_right`
 - 再用 `play_with_cat` 按顺序回放这些姿态
+- 回放会对关键姿态之间做插值，避免机械臂直接跳变
+- 当前默认基准参数为 `interpolation_steps=28`、`step_seconds=0.03`、`dwell_seconds=0.1`
 - 默认 `dry_run=true`，只返回计划步骤，不会让真实机器人动
 - 只有在主人明确要求并确认周围安全后，才把 `dry_run` 设为 `false`
 
