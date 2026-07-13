@@ -186,6 +186,8 @@ PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play
 PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approach-steps 3 --forward-meters 0.02
 ```
 
+当前演示脚本默认 `center_tolerance=0.25`，适合现在的头部广角摄像头；猫大致进入中间区域后，会执行 `0.02m` 的小步前进。
+
 ## 后续开发规划
 
 ### 阶段 1：视觉找猫

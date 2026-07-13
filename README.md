@@ -149,3 +149,6 @@ Run a short closed-loop approach before cat play:
 ```bash
 PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approach-steps 3 --forward-meters 0.02
 ```
+
+The demo defaults to `center_tolerance=0.25`, which is tuned for the current head camera and lets the robot use
+small forward steps once the pet is roughly centered.
