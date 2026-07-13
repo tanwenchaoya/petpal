@@ -70,7 +70,4 @@ Implemented core tools:
 - `record_petpal_pose`
 - `play_with_cat`
 - `save_pet_status`
-
-The next core tools to add are:
-
-- `generate_daily_report`
+- `generate_pet_daily_report`

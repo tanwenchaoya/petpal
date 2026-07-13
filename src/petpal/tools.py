@@ -77,6 +77,25 @@ def create_save_pet_status_report():
     return save_pet_status
 
 
+def create_generate_daily_report():
+    from langchain_core.tools import tool
+
+    from .reports import generate_daily_report
+    from .vision import detection_result_to_json
+
+    @tool
+    def generate_pet_daily_report(report_date: str | None = None) -> str:
+        """Generate a simple daily report from saved pet status reports.
+
+        report_date should use YYYYMMDD. If omitted, today's local date is used.
+        """
+
+        result = generate_daily_report(report_date=report_date)
+        return detection_result_to_json(result)
+
+    return generate_pet_daily_report
+
+
 def create_record_petpal_pose(servo_controler: Any):
     from langchain_core.tools import tool
 
@@ -150,4 +169,5 @@ def build_basic_petpal_tools(servo_controler: Any, main_camera: Any | None = Non
     tools.insert(-1, create_record_petpal_pose(servo_controler))
     tools.insert(-1, create_play_with_cat(servo_controler))
     tools.insert(-1, create_save_pet_status_report())
+    tools.insert(-1, create_generate_daily_report())
     return tools

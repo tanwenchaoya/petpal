@@ -22,6 +22,7 @@ Decision rules:
 - For photo requests, use capture_pet_photo.
 - For pet status reports, inspect the current camera image, use save_pet_status, describe visible behavior
   and uncertainty, and do not make medical claims.
+- For daily summaries, use generate_pet_daily_report after status reports have been saved.
 - For cat-play requests, use play_with_cat only in short scripted runs. Keep dry_run true unless the owner
   explicitly asks for real movement and confirms the area is clear.
 """
