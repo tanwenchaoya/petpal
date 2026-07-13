@@ -140,7 +140,7 @@ python examples/petpal_agent.py --simulate
 
 - YOLO 找猫工具已接入基础版，但现场识别稳定性还需要继续调参和补数据
 - VLM 宠物状态报告已具备最小落盘能力，但还没有做日报聚合
-- 尚未实现逗猫脚本或录制轨迹回放
+- 逗猫脚本/录制轨迹回放已具备基础工具，真实互动动作仍需要现场录制和调参
 - 尚未实现宠物日报
 - 尚未实现 Web / 手机端控制台
 - 尚未实现完整自主导航、避障、地图和定位
@@ -270,8 +270,16 @@ src/petpal/trajectories.py
 新增工具：
 
 ```text
+record_petpal_pose
 play_with_cat
 ```
+
+当前实现方式：
+
+- 先用 `record_petpal_pose` 录制几个右臂姿态，例如 `petpal_tease_left`、`petpal_tease_center`、`petpal_tease_right`
+- 再用 `play_with_cat` 按顺序回放这些姿态
+- 默认 `dry_run=true`，只返回计划步骤，不会让真实机器人动
+- 只有在主人明确要求并确认周围安全后，才把 `dry_run` 设为 `false`
 
 优先支持两种方式：
 

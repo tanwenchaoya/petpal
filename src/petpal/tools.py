@@ -77,6 +77,63 @@ def create_save_pet_status_report():
     return save_pet_status
 
 
+def create_record_petpal_pose(servo_controler: Any):
+    from langchain_core.tools import tool
+
+    from .trajectories import record_arm_pose
+    from .vision import detection_result_to_json
+
+    @tool
+    def record_petpal_pose(position_name: str, arm_side: str = "right") -> str:
+        """Record the current arm pose for later scripted playback.
+
+        Use this during setup when a human has manually moved the arm to a useful laser-pointer pose.
+        Recommended pose names: petpal_tease_left, petpal_tease_center, petpal_tease_right.
+        """
+
+        result = record_arm_pose(
+            servo_controler,
+            position_name=position_name,
+            arm_side=arm_side,  # type: ignore[arg-type]
+        )
+        return detection_result_to_json(result)
+
+    return record_petpal_pose
+
+
+def create_play_with_cat(servo_controler: Any):
+    from langchain_core.tools import tool
+
+    from .trajectories import play_pose_sequence
+    from .vision import detection_result_to_json
+
+    @tool
+    def play_with_cat(
+        pose_names: list[str] | None = None,
+        arm_side: str = "right",
+        repeat: int = 1,
+        dwell_seconds: float = 0.7,
+        dry_run: bool = True,
+    ) -> str:
+        """Replay a recorded pose sequence for laser-pointer cat play.
+
+        Keep dry_run=true unless the owner explicitly asks to run the movement and the area is clear.
+        The default sequence expects petpal_tease_left, petpal_tease_center, and petpal_tease_right.
+        """
+
+        result = play_pose_sequence(
+            servo_controler,
+            pose_names=pose_names,
+            arm_side=arm_side,  # type: ignore[arg-type]
+            repeat=repeat,
+            dwell_seconds=dwell_seconds,
+            dry_run=dry_run,
+        )
+        return detection_result_to_json(result)
+
+    return play_with_cat
+
+
 def build_basic_petpal_tools(servo_controler: Any, main_camera: Any | None = None) -> list[Any]:
     from robocrew.core.tools import finish_task
     from robocrew.robots.XLeRobot.tools import create_move_forward, create_turn_left, create_turn_right
@@ -90,5 +147,7 @@ def build_basic_petpal_tools(servo_controler: Any, main_camera: Any | None = Non
     if main_camera is not None:
         tools.insert(0, create_find_cat(main_camera))
         tools.insert(0, create_capture_pet_photo(main_camera))
+    tools.insert(-1, create_record_petpal_pose(servo_controler))
+    tools.insert(-1, create_play_with_cat(servo_controler))
     tools.insert(-1, create_save_pet_status_report())
     return tools
