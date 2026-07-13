@@ -159,7 +159,7 @@ PetPal LLM Agent 理解任务
         ↓
 调用 find_cat 找猫
         ↓
-调用 approach_cat 靠近
+调用 approach_cat_tool 靠近
         ↓
 调用 capture_pet_photo / save_pet_status 生成状态报告
         ↓
@@ -210,10 +210,12 @@ outputs/captures/
 
 目标：让机器人根据猫在画面中的位置，执行低速、短步、可停止的靠近动作。
 
+当前状态：基础版已完成，默认 dry-run，不会直接移动真实机器人。
+
 新增工具：
 
 ```text
-approach_cat
+approach_cat_tool
 ```
 
 策略：
@@ -223,6 +225,14 @@ approach_cat
 - 猫在画面中央且距离较远：低速前进
 - 猫消失：停止并重新扫描
 - 靠近超时或距离足够近：停止
+- 默认 `dry_run=true`，只返回计划动作；真实执行时需要显式设置 `dry_run=false`
+
+命令行测试：
+
+```bash
+PYTHONPATH=src python examples/petpal_approach.py --camera 0
+PYTHONPATH=src python examples/petpal_approach.py --camera 0 --run
+```
 
 注意：这个阶段不做完整 SLAM，只做比赛场景内的受控视觉靠近。
 

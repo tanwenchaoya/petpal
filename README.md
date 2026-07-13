@@ -45,6 +45,7 @@ python examples/petpal_agent.py --simulate
 src/petpal/
   agent.py       # PetPal LLM loop, prompt, image context, tool-call execution
   config.py      # LLM, voice, robot, and runtime configuration
+  navigation.py  # Visual-servo approach policy
   runtime.py     # Camera, servo controller, tools, and agent construction
   tools.py       # Tools exposed to the LLM
   trajectories.py # Recorded pose playback for scripted interaction
@@ -53,6 +54,7 @@ src/petpal/
   voice.py       # Local ASR listener for voice commands
 examples/
   petpal_agent.py
+  petpal_approach.py
   petpal_trajectory.py
 docs/
   maintenance.md
@@ -68,6 +70,7 @@ Implemented core tools:
 
 - `capture_pet_photo`
 - `find_cat`
+- `approach_cat_tool`
 - `record_petpal_pose`
 - `play_with_cat`
 - `save_pet_status`
@@ -99,4 +102,18 @@ Run the recorded playback:
 
 ```bash
 PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run
+```
+
+## Approach Test
+
+Dry-run visual approach with the head camera:
+
+```bash
+PYTHONPATH=src python examples/petpal_approach.py --camera 0
+```
+
+Actually run one short movement step when the area is clear:
+
+```bash
+PYTHONPATH=src python examples/petpal_approach.py --camera 0 --run
 ```

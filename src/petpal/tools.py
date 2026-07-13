@@ -45,6 +45,45 @@ def create_find_cat(main_camera: Any):
     return find_cat
 
 
+def create_approach_cat(servo_controler: Any, main_camera: Any):
+    from langchain_core.tools import tool
+
+    from .navigation import approach_cat
+    from .vision import detection_result_to_json
+
+    @tool
+    def approach_cat_tool(
+        max_steps: int = 1,
+        confidence_threshold: float = 0.20,
+        center_tolerance: float = 0.15,
+        target_area_ratio: float = 0.03,
+        forward_meters: float = 0.03,
+        dry_run: bool = True,
+        save_images: bool = True,
+    ) -> str:
+        """Take short visual-servo steps to align and approach a detected cat.
+
+        The tool detects the cat, then chooses exactly one small action per step:
+        turn_left, turn_right, move_forward, stop, or none. Keep dry_run=true unless
+        the owner explicitly confirms the area is clear and asks for real movement.
+        """
+
+        result = approach_cat(
+            servo_controler,
+            main_camera,
+            max_steps=max_steps,
+            confidence_threshold=confidence_threshold,
+            center_tolerance=center_tolerance,
+            target_area_ratio=target_area_ratio,
+            forward_meters=forward_meters,
+            dry_run=dry_run,
+            save_images=save_images,
+        )
+        return detection_result_to_json(result)
+
+    return approach_cat_tool
+
+
 def create_save_pet_status_report():
     from langchain_core.tools import tool
 
@@ -166,6 +205,7 @@ def build_basic_petpal_tools(servo_controler: Any, main_camera: Any | None = Non
     if main_camera is not None:
         tools.insert(0, create_find_cat(main_camera))
         tools.insert(0, create_capture_pet_photo(main_camera))
+        tools.insert(0, create_approach_cat(servo_controler, main_camera))
     tools.insert(-1, create_record_petpal_pose(servo_controler))
     tools.insert(-1, create_play_with_cat(servo_controler))
     tools.insert(-1, create_save_pet_status_report())

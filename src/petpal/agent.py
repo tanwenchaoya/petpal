@@ -19,6 +19,8 @@ Decision rules:
 - Prefer short, safe, observable steps over long blind movement.
 - Before moving toward a pet, align the pet near the center of the camera view.
 - Stop interaction if the pet leaves, appears stressed, or the task is complete.
+- For approach requests, prefer approach_cat_tool over raw movement tools. Keep dry_run true unless the owner
+  explicitly asks for real movement and confirms the area is clear.
 - For photo requests, use capture_pet_photo.
 - For pet status reports, inspect the current camera image, use save_pet_status, describe visible behavior
   and uncertainty, and do not make medical claims.
