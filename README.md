@@ -55,6 +55,7 @@ src/petpal/
 examples/
   petpal_agent.py
   petpal_approach.py
+  petpal_demo.py
   petpal_trajectory.py
 docs/
   maintenance.md
@@ -130,4 +131,12 @@ Actually run one short movement step when the area is clear:
 
 ```bash
 PYTHONPATH=src python examples/petpal_approach.py --camera 2 --run
+```
+
+## Deterministic Demo
+
+Run the MVP flow with one small approach step and recorded cat play:
+
+```bash
+PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play
 ```

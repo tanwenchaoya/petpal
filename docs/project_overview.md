@@ -172,6 +172,14 @@ PetPal LLM Agent 理解任务
 
 其中 LLM 只负责任务编排，找猫、靠近、逗猫都由确定性工具执行。
 
+当前也提供了一个确定性演示脚本，避免比赛现场完全依赖 LLM 自由规划：
+
+```bash
+PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play
+```
+
+该脚本会执行：拍照、一次小步靠近决策、状态报告、平滑逗猫轨迹、日报生成。
+
 ## 后续开发规划
 
 ### 阶段 1：视觉找猫
