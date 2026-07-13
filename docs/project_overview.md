@@ -197,6 +197,7 @@ src/petpal/vision.py
 核心能力：
 
 - 使用 YOLO 检测 `cat`
+- 如果 YOLO 将猫误识别为 `dog`，会作为 `cat_candidate` fallback 返回，并保留 `model_label`
 - 返回猫的 bounding box、中心点、置信度
 - 返回检测框面积占比，供后续粗略距离判断使用
 - 全图未检出时，会对画面分块放大后再次检测

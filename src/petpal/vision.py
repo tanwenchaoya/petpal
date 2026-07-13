@@ -21,6 +21,7 @@ class Detection:
     center_xy: list[float]
     area_ratio: float
     source: str = "full_frame"
+    model_label: str | None = None
 
 
 _YOLO_MODEL: Any | None = None
@@ -87,12 +88,14 @@ def _cat_detections_from_result(
     offset_y: float = 0.0,
     scale: float = 1.0,
     source: str = "full_frame",
+    accepted_labels: tuple[str, ...] = ("cat",),
+    output_label: str = "cat",
 ) -> list[Detection]:
     detections: list[Detection] = []
     for box in result.boxes:
         class_id = int(box.cls[0])
-        label = result.names[class_id]
-        if label != "cat":
+        model_label = result.names[class_id]
+        if model_label not in accepted_labels:
             continue
 
         raw_x1, raw_y1, raw_x2, raw_y2 = [float(value) for value in box.xyxy[0]]
@@ -104,12 +107,13 @@ def _cat_detections_from_result(
         box_area = max(0.0, x2 - x1) * max(0.0, y2 - y1)
         detections.append(
             Detection(
-                label=label,
+                label=output_label,
                 confidence=round(confidence, 4),
                 xyxy=[round(x1, 1), round(y1, 1), round(x2, 1), round(y2, 1)],
                 center_xy=[round((x1 + x2) / 2, 1), round((y1 + y2) / 2, 1)],
                 area_ratio=round(box_area / float(image_width * image_height), 4),
                 source=source,
+                model_label=model_label,
             )
         )
     return detections
@@ -135,6 +139,8 @@ def _detect_cat_in_tiles(
     *,
     confidence_threshold: float,
     scale: float = 2.0,
+    accepted_labels: tuple[str, ...] = ("cat",),
+    output_label: str = "cat",
 ) -> list[Detection]:
     height, width = frame.shape[:2]
     detections: list[Detection] = []
@@ -153,6 +159,8 @@ def _detect_cat_in_tiles(
                 offset_y=y1,
                 scale=scale,
                 source=f"tile:{name}",
+                accepted_labels=accepted_labels,
+                output_label=output_label,
             )
         )
     return detections
@@ -162,7 +170,8 @@ def _draw_cat_detections(frame: np.ndarray, detections: list[Detection]) -> np.n
     annotated = frame.copy()
     for detection in detections:
         x1, y1, x2, y2 = [int(value) for value in detection.xyxy]
-        label = f"cat {detection.confidence:.2f} {detection.source}"
+        model_label = detection.model_label or detection.label
+        label = f"{detection.label}/{model_label} {detection.confidence:.2f} {detection.source}"
         cv2.rectangle(annotated, (x1, y1), (x2, y2), (0, 255, 0), 3)
         cv2.putText(
             annotated,
@@ -225,6 +234,22 @@ def detect_cat(
             model,
             frame,
             confidence_threshold=confidence_threshold,
+        )
+    if not detections:
+        detections = _cat_detections_from_result(
+            result,
+            image_width=width,
+            image_height=height,
+            accepted_labels=("dog",),
+            output_label="cat_candidate",
+        )
+    if not detections:
+        detections = _detect_cat_in_tiles(
+            model,
+            frame,
+            confidence_threshold=confidence_threshold,
+            accepted_labels=("dog",),
+            output_label="cat_candidate",
         )
 
     detections.sort(key=lambda item: item.confidence, reverse=True)

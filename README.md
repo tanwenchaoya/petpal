@@ -77,6 +77,9 @@ Implemented core tools:
 - `save_pet_status`
 - `generate_pet_daily_report`
 
+`find_cat` prioritizes YOLO `cat` detections. When YOLO mislabels the visible cat as `dog`, PetPal returns it as
+`cat_candidate` and preserves the original `model_label`.
+
 ## Recorded Pose Workflow
 
 Release the arm torque before manually posing the arm:
