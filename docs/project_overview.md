@@ -293,6 +293,17 @@ play_with_cat
 - 默认 `dry_run=true`，只返回计划步骤，不会让真实机器人动
 - 只有在主人明确要求并确认周围安全后，才把 `dry_run` 设为 `false`
 
+命令行录制流程：
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py release --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_left --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_center --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_right --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run
+```
+
 优先支持两种方式：
 
 1. 手写轨迹

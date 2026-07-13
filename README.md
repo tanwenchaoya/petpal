@@ -53,6 +53,7 @@ src/petpal/
   voice.py       # Local ASR listener for voice commands
 examples/
   petpal_agent.py
+  petpal_trajectory.py
 docs/
   maintenance.md
   camera_mapping.md
@@ -71,3 +72,31 @@ Implemented core tools:
 - `play_with_cat`
 - `save_pet_status`
 - `generate_pet_daily_report`
+
+## Recorded Pose Workflow
+
+Release the arm torque before manually posing the arm:
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py release --arm-side right
+```
+
+Move the arm by hand, then record each pose:
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_left --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_center --arm-side right
+PYTHONPATH=src python examples/petpal_trajectory.py record --position-name petpal_tease_right --arm-side right
+```
+
+Check the playback plan without moving:
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right
+```
+
+Run the recorded playback:
+
+```bash
+PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run
+```

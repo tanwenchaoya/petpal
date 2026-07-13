@@ -37,11 +37,13 @@ def record_arm_pose(
     position_name: str,
     arm_side: ArmSide = "right",
 ) -> dict[str, Any]:
+    positions = servo_controler.read_arm_present_position(arm_side)
     path = servo_controler.save_arm_position(position_name, arm_side)
     return {
         "position_name": position_name,
         "arm_side": arm_side,
         "position_file": path,
+        "positions": positions,
     }
 
 
