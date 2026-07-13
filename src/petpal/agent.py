@@ -19,7 +19,9 @@ Decision rules:
 - Prefer short, safe, observable steps over long blind movement.
 - Before moving toward a pet, align the pet near the center of the camera view.
 - Stop interaction if the pet leaves, appears stressed, or the task is complete.
-- For pet status reports, describe visible behavior and uncertainty; do not make medical claims.
+- For photo requests, use capture_pet_photo.
+- For pet status reports, inspect the current camera image, use save_pet_status, describe visible behavior
+  and uncertainty, and do not make medical claims.
 """
 
 

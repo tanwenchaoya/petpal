@@ -42,7 +42,21 @@ petpal/
 
 这已经形成了最小的“看见环境 -> 理解任务 -> 调用工具 -> 执行动作”的闭环。
 
-### 3. 模型与运行配置集中管理
+### 3. 拍照与状态报告
+
+当前已经新增两个不依赖 YOLO 精度的基础工具：
+
+```text
+capture_pet_photo
+save_pet_status
+```
+
+`capture_pet_photo` 负责从头部摄像头抓取一帧并保存到 `outputs/captures/`。`save_pet_status`
+负责把 VLM 基于当前画面的观察结果保存成 JSON 和 Markdown，输出到 `outputs/reports/`。
+
+这条链路可以先支撑“拍张照片发给我”和“看看猫现在状态怎么样”的远程看护演示。
+
+### 4. 模型与运行配置集中管理
 
 当前配置集中在 `src/petpal/config.py`：
 
@@ -68,7 +82,7 @@ qwen3.5-plus-2026-02-15
 qwen3-asr-flash
 ```
 
-### 4. 语音输入能力
+### 5. 语音输入能力
 
 当前 `src/petpal/voice.py` 已经内置本项目自己的语音监听与 ASR 逻辑，不再依赖修改 RoboCrew 的 `sound_receiver.py`。
 
@@ -80,7 +94,7 @@ qwen3-asr-flash
 
 这意味着后续要调整语音模型、唤醒词、录音阈值、语言参数，都可以在 PetPal 项目内完成。
 
-### 5. 基础机器人动作工具
+### 6. 基础机器人动作工具
 
 当前 `src/petpal/tools.py` 已接入 RoboCrew 的基础 XLeRobot 工具：
 
@@ -98,7 +112,7 @@ qwen3-asr-flash
 完成任务
 ```
 
-### 6. 独立启动入口
+### 7. 独立启动入口
 
 当前入口：
 
@@ -124,8 +138,8 @@ python examples/petpal_agent.py --simulate
 
 当前版本仍然是 PetPal 的基础框架，不是完整宠物陪护系统。以下能力尚未完成：
 
-- 尚未接入 YOLO 找猫工具
-- 尚未接入 VLM 宠物状态报告工具
+- YOLO 找猫工具已接入基础版，但现场识别稳定性还需要继续调参和补数据
+- VLM 宠物状态报告已具备最小落盘能力，但还没有做日报聚合
 - 尚未实现逗猫脚本或录制轨迹回放
 - 尚未实现宠物日报
 - 尚未实现 Web / 手机端控制台
@@ -147,7 +161,7 @@ PetPal LLM Agent 理解任务
         ↓
 调用 approach_cat 靠近
         ↓
-调用 analyze_cat_state 生成状态报告
+调用 capture_pet_photo / save_pet_status 生成状态报告
         ↓
 主人下发“逗逗猫”
         ↓
@@ -164,7 +178,7 @@ PetPal LLM Agent 理解任务
 
 目标：让机器人能在摄像头画面中识别猫，并返回检测结果。
 
-当前状态：基础版已完成。
+当前状态：基础版已完成，现场识别稳定性仍需要继续调参。
 
 已新增：
 
@@ -176,8 +190,8 @@ src/petpal/vision.py
 
 - 使用 YOLO 检测 `cat`
 - 返回猫的 bounding box、中心点、置信度
-- 根据检测框中心判断猫在画面左侧、右侧还是中央
-- 根据检测框面积粗略估算距离
+- 返回检测框面积占比，供后续粗略距离判断使用
+- 全图未检出时，会对画面分块放大后再次检测
 - 保存关键帧截图
 
 新增工具：
@@ -225,7 +239,8 @@ src/petpal/reports.py
 新增工具：
 
 ```text
-analyze_cat_state
+capture_pet_photo
+save_pet_status
 ```
 
 报告内容：

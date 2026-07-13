@@ -47,7 +47,8 @@ src/petpal/
   config.py      # LLM, voice, robot, and runtime configuration
   runtime.py     # Camera, servo controller, tools, and agent construction
   tools.py       # Tools exposed to the LLM
-  vision.py      # YOLO-based cat detection
+  reports.py     # Pet status report persistence
+  vision.py      # Camera capture and YOLO-based cat detection
   voice.py       # Local ASR listener for voice commands
 examples/
   petpal_agent.py
@@ -63,10 +64,11 @@ PetPal-specific behavior should live under `src/petpal/`. Avoid editing installe
 
 Implemented core tools:
 
+- `capture_pet_photo`
 - `find_cat`
+- `save_pet_status`
 
 The next core tools to add are:
 
-- `analyze_cat_state`
 - `play_with_cat`
 - `generate_daily_report`
