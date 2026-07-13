@@ -35,6 +35,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--left-arm", type=str, default=PetPalRobotConfig.left_arm_port)
     parser.add_argument("--run-approach", action="store_true", help="Actually run one small approach step")
     parser.add_argument("--run-play", action="store_true", help="Actually run the recorded cat-play trajectory")
+    parser.add_argument("--approach-steps", type=int, default=1)
     parser.add_argument("--forward-meters", type=float, default=0.02)
     parser.add_argument("--confidence-threshold", type=float, default=0.20)
     return parser.parse_args()
@@ -84,7 +85,7 @@ def main() -> None:
         approach_result = approach_cat(
             servo,
             camera,
-            max_steps=1,
+            max_steps=args.approach_steps,
             confidence_threshold=args.confidence_threshold,
             forward_meters=args.forward_meters,
             dry_run=not args.run_approach,

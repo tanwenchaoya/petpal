@@ -143,3 +143,9 @@ Run the MVP flow with one small approach step and recorded cat play:
 ```bash
 PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play
 ```
+
+Run a short closed-loop approach before cat play:
+
+```bash
+PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approach-steps 3 --forward-meters 0.02
+```

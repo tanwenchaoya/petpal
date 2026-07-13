@@ -180,6 +180,12 @@ PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play
 
 该脚本会执行：拍照、一次小步靠近决策、状态报告、平滑逗猫轨迹、日报生成。
 
+如果需要让靠近阶段形成短闭环，可以增加步数：
+
+```bash
+PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approach-steps 3 --forward-meters 0.02
+```
+
 ## 后续开发规划
 
 ### 阶段 1：视觉找猫
