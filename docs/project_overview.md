@@ -187,6 +187,7 @@ PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approa
 ```
 
 当前演示脚本默认 `center_tolerance=0.25`，适合现在的头部广角摄像头；猫大致进入中间区域后，会执行 `0.02m` 的小步前进。
+靠近循环当前最多允许 10 步，避免一次演示中移动过长。
 
 ## 后续开发规划
 

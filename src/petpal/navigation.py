@@ -105,7 +105,7 @@ def approach_cat(
     dry_run: bool = True,
     save_images: bool = True,
 ) -> dict[str, Any]:
-    max_steps = max(1, min(int(max_steps), 5))
+    max_steps = max(1, min(int(max_steps), 10))
     forward_meters = max(0.01, min(float(forward_meters), 0.05))
 
     steps: list[dict[str, Any]] = []
