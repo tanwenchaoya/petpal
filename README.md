@@ -61,6 +61,7 @@ docs/
   maintenance.md
   camera_mapping.md
   project_overview.md
+  technical_roadmap.md
 ```
 
 ## Development Rule
@@ -153,3 +154,8 @@ PYTHONPATH=src python examples/petpal_demo.py --run-approach --run-play --approa
 The demo defaults to `center_tolerance=0.25`, which is tuned for the current head camera and lets the robot use
 small forward steps once the pet is roughly centered.
 The approach loop is capped at 10 steps.
+
+## Planning Docs
+
+- `docs/project_overview.md`: current capabilities and broad roadmap
+- `docs/technical_roadmap.md`: engineering plan for LLM/VLM/YOLO/control integration
