@@ -6,14 +6,14 @@ installed dependencies under `site-packages`.
 ## Main Entry
 
 ```bash
-PYTHONPATH=src python examples/petpal_agent.py --camera 0
+PYTHONPATH=src python examples/petpal_agent.py --camera 2
 ```
 
 Voice mode:
 
 ```bash
 export OPENAI_API_KEY="your-bailian-api-key"
-PYTHONPATH=src python examples/petpal_agent.py --voice --camera 0 --model qwen3.5-plus-2026-02-15
+PYTHONPATH=src python examples/petpal_agent.py --voice --camera 2 --model qwen3.5-plus-2026-02-15
 ```
 
 ## Where To Change Things

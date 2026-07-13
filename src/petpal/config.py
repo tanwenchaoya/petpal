@@ -38,7 +38,7 @@ class PetPalVoiceConfig:
 
 @dataclass
 class PetPalRobotConfig:
-    camera_index: int = 0
+    camera_index: int = 2
     right_arm_port: str = "/dev/cu.usbmodem5AB01579071"
     left_arm_port: str = "/dev/cu.usbmodem5A7C1223751"
 

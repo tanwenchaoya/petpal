@@ -117,13 +117,13 @@ qwen3-asr-flash
 当前入口：
 
 ```bash
-python examples/petpal_agent.py --camera 0
+python examples/petpal_agent.py --camera 2
 ```
 
 语音模式：
 
 ```bash
-python examples/petpal_agent.py --voice --camera 0 --model qwen3.5-plus-2026-02-15
+python examples/petpal_agent.py --voice --camera 2 --model qwen3.5-plus-2026-02-15
 ```
 
 模拟模式：
@@ -230,8 +230,8 @@ approach_cat_tool
 命令行测试：
 
 ```bash
-PYTHONPATH=src python examples/petpal_approach.py --camera 0
-PYTHONPATH=src python examples/petpal_approach.py --camera 0 --run
+PYTHONPATH=src python examples/petpal_approach.py --camera 2
+PYTHONPATH=src python examples/petpal_approach.py --camera 2 --run
 ```
 
 注意：这个阶段不做完整 SLAM，只做比赛场景内的受控视觉靠近。

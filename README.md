@@ -24,13 +24,13 @@ export OPENAI_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
 Run the agent:
 
 ```bash
-python examples/petpal_agent.py --camera 0
+python examples/petpal_agent.py --camera 2
 ```
 
 Voice mode:
 
 ```bash
-python examples/petpal_agent.py --voice --camera 0 --model qwen3.5-plus-2026-02-15
+python examples/petpal_agent.py --voice --camera 2 --model qwen3.5-plus-2026-02-15
 ```
 
 Simulation mode only checks the LLM connection and does not connect robot hardware:
@@ -109,11 +109,11 @@ PYTHONPATH=src python examples/petpal_trajectory.py play --arm-side right --run
 Dry-run visual approach with the head camera:
 
 ```bash
-PYTHONPATH=src python examples/petpal_approach.py --camera 0
+PYTHONPATH=src python examples/petpal_approach.py --camera 2
 ```
 
 Actually run one short movement step when the area is clear:
 
 ```bash
-PYTHONPATH=src python examples/petpal_approach.py --camera 0 --run
+PYTHONPATH=src python examples/petpal_approach.py --camera 2 --run
 ```
